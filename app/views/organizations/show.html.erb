@@ -1,0 +1,22 @@
+<h1><%= @current_organization.display_name %></h1>
+<dl class="grouped">
+  <div class="grouped__div grouped__div--long">
+    <dt>Identifier</dt>
+    <dd><%= @current_organization.name %></dd>
+  </div>
+
+  <div class="grouped__div grouped__div--long">
+    <dt>Contact</dt>
+    <dd><%= @primary_contact.contact_name %></dd>
+  </div>
+
+  <div class="grouped__div grouped__div--long">
+    <dt>Email</dt>
+    <dd><%= @primary_contact.contact_email %></dd>
+  </div>
+
+  <div class="grouped__div grouped__div--long">
+    <dt>Phone Number</dt>
+    <dd><%= @primary_contact.contact_phone %></dd>
+  </div>
+</dl>

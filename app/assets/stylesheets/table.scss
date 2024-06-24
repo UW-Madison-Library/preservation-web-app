@@ -1,0 +1,29 @@
+table {
+  margin: 2em 0;
+  border-collapse: collapse;
+}
+
+.table--borderless td {
+  border-top: var(--main-border);
+}
+
+tbody td:last-child, thead th:last-child {
+  padding: 10px 0;
+}
+
+td, th {
+  text-align: left;
+  padding: 10px 3em 10px 0;
+  width: 125px;
+}
+
+.table--large {
+  margin: 0;
+  td, th {
+    width: auto;
+  }
+}
+
+.table__data--right {
+  text-align: right;
+}

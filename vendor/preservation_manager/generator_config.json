@@ -1,0 +1,10 @@
+
+{
+  "gemName" : "preservation_manager",
+  "gemVersion" : "1.0.0",
+  "gemAuthor" : "UW-Madison Libraries",
+  "gemHomepage" : "https://github.com/UW-Madison-Library/preservation-api/blob/main/openapi/manager-external-api.yml",
+  "gemSummary": "Ruby client for the preservation service API.",
+  "gemDescription": "The client is generated from the external API definitions for the Preservation Manager.",
+  "gemLicense": "Apache-2.0"
+}

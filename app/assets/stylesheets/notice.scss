@@ -1,0 +1,32 @@
+.notice {
+  display: grid;
+  grid-template-columns: 30px auto;
+  grid-gap: 3px;
+
+  background: #FAFAEE;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  box-shadow: 0 1px 7px 0px rgba(0, 0, 0, 0.08);
+  border: 1px solid #F2F2F2;
+  margin-bottom: 25px;
+  width: fit-content;
+  width: -moz-fit-content;
+
+  .material-icons {
+    background: linear-gradient(96.86deg, #005CA5 0%, #0D8CF1 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    border-radius: 4px;
+    padding: 0;
+  }
+}
+
+.notice--alert {
+  .material-icons {
+    background: linear-gradient(96.86deg, #8C0000 0%, #E72121 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+}

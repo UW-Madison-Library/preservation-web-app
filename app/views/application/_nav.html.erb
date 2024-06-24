@@ -1,0 +1,28 @@
+<nav>
+  <div class="nav_group">
+    <h1 class="nav_org_name"><%= current_organization.display_name %></h1>
+  </div>
+  <ul class="nav_group">
+    <li>
+      <%= link_to organization_path(current_organization.name) do %>
+        <div class="<%= highlight_current(%w[organizations]) %>">
+          <span class="nav_icon material-icons" aria-hidden="true">business</span>Organization
+        </div>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to organization_vaults_path(current_organization.name) do %>
+        <div class="<%= highlight_current(%w[vaults preservation_objects]) %>">
+          <span class="nav_icon material-icons" aria-hidden="true">inventory_2</span>Vaults
+        </div>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to organization_batches_path(current_organization.name)do %>
+        <div class="<%= highlight_current(%w[batches batch_objects]) %>">
+          <span class="nav_icon material-icons" aria-hidden="true">upload_file</span>Batches
+        </div>
+      <% end %>
+    </li>
+  </ul>
+</nav>

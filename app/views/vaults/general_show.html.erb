@@ -1,0 +1,20 @@
+<p class="notice notice--alert">
+  <span class="material-icons" aria-hidden="true">error</span>
+  You are not a member of this vault. If you need to view or contribute content, please contact your organization administrator.
+</p>
+<h1>Vault <%= @vault.name %></h1>
+<dl class="grouped">
+  <div class="grouped__div grouped__div--long">
+    <dt>Description</dt>
+    <dd><%= @vault.description %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Members</dt>
+    <% if @members[:contributor_list].count.positive? %>
+      <dd>Contributors: <%= format_display_names(@members[:contributor_list], current_user.display_name) %></dd>
+    <% end %>
+    <% if @members[:viewer_list].count.positive? %>
+      <dd>Viewers: <%= format_display_names(@members[:viewer_list], current_user.display_name) %></dd>
+    <% end %>
+  </div>
+</dl>

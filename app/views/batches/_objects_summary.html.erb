@@ -1,0 +1,29 @@
+<h2>Identified Objects</h2>
+<p class="text--bold"><%= link_to "View Objects in Batch #{batch_id}", batch_objects_path(batch_id) %></p>
+<ul class="object-count">
+  <li class="object-count__item">
+    <%= link_to 'Objects without Issues',
+                batch_objects_path(batch_id, params: { has_problems: SearchBatchObjects::FILTERS[:no_issues] }) %>
+    <span class="object-count__num"><%= number_with_delimiter(no_issues_object_count) %></span>
+  </li>
+  <li class="object-count__item">
+    <%= link_to 'Objects with Warnings',
+                batch_objects_path(batch_id, params: { has_problems: SearchBatchObjects::FILTERS[:warning] }) %>
+    <span class="object-count__num"><%= number_with_delimiter(warning_object_count) %></span>
+    <% if warning_object_count.positive? %>
+      <span class="material-icons" aria-hidden="true">warning</span>
+    <% end %>
+  </li>
+  <li class="object-count__item">
+    <%= link_to 'Objects with Errors',
+                batch_objects_path(batch_id, params: { has_problems: SearchBatchObjects::FILTERS[:error] }) %>
+    <span class="object-count__num"><%= number_with_delimiter(error_object_count) %></span>
+    <% if error_object_count.positive? %>
+      <span class="material-icons" aria-hidden="true">dangerous</span>
+    <% end %>
+  </li>
+  <li class="object-count__item object-count__item--total">
+    <%= link_to 'Total Objects Submitted', batch_objects_path(batch_id) %>
+    <span class="object-count__num"><%= number_with_delimiter(total_object_count) %></span>
+  </li>
+</ul>

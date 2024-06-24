@@ -1,0 +1,15 @@
+<%= form_with url: batch_objects_path, method: :get do |form| %>
+  <fieldset>
+    <legend>Filter</legend>
+    <div class="select">
+      <%= form.label :analysis %>
+      <%= form.select :has_problems,
+                      SearchBatchObjects::FILTERS.map { |k, v| [k.to_s.titleize, v] },
+                      { selected: params[:has_problems] } %>
+    </div>
+
+    <div class="filter">
+      <%= form.submit 'Apply Filter' %>
+    </div>
+  </fieldset>
+<% end %>

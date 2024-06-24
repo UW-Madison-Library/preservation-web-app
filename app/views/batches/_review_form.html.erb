@@ -1,0 +1,21 @@
+<%= form_with model: batch, url: batch_path, method: :patch, data: { turbo: "true", turbo_confirm: 'Are you sure you want to submit this review?' } do |form| %>
+  <fieldset <%= disabled(vault) %>>
+    <legend><%= batch_review_legend(vault) %></legend>
+
+    <p>Approving this batch will add objects without errors to vault: <span class="confirm_vault"><%= vault.name %></span></p>
+
+    <div>
+      <%= radio_button_tag(:review, 'approve', false, { required: true }) %>
+      <%= label_tag(:review_approve, 'Approve (add objects to the vault)') %>
+    </div>
+
+    <div>
+      <%= radio_button_tag(:review, 'reject', false, { required: true }) %>
+      <%= label_tag(:review_reject, 'Reject (do not add objects to the vault)') %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit 'Submit Review' %>
+    </div>
+  </fieldset>
+<% end %>

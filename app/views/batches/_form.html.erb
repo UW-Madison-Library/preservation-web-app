@@ -1,0 +1,18 @@
+<%= form_with model: batch, url: organization_batches_path, data: { turbo: "true" } do |form| %>
+  <div class="select">
+    <%= form.label :vault %>
+    <%= form.collection_select :vault, vaults, :name, :name, { prompt: true, selected: params[:vault_name] }, { required: true } %>
+  </div>
+
+  <div class="select-file">
+    <%= form.label :bag %>
+    <%= form.file_field :bag, accept: '.zip', required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.button do %>
+      <span class='button__text--enabled'>Create Batch</span>
+      <span class='button__text--disabled'>Uploading<%= bounce_animation %></span>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,42 @@
+.batch_item {
+  margin: 2em 0;
+}
+
+.batch_item::before {
+  border-bottom: var(--main-border);
+  content: "";
+  display: block;
+}
+
+.object-count {
+  padding: .5em 1em 1.5em 0;
+}
+
+.object-count__item--total {
+  width: 260px;
+  border-top: solid;
+}
+
+.object-count__item {
+  display: grid;
+  grid-template-columns: 175px 75px auto;
+  grid-gap: .5em;
+  align-items: end;
+}
+
+.object-count__num {
+  text-align: right;
+  font-family: monospace;
+}
+
+.batch_list {
+  padding: 1em 1.5em;
+  margin: 1em 0;
+  border: var(--main-border);
+  border-radius: 6px;
+}
+
+.confirm_vault {
+  font-weight: bold;
+  display: block;
+}

@@ -1,0 +1,67 @@
+<dl class="file-attr">
+  <dt>Digest</dt>
+  <dd class="monospace"><%= object_file.sha_256_digest %></dd>
+  <dt>File Size</dt>
+  <dd><%= object_file.file_size %> bytes</dd>
+</dl>
+
+<% if object_file.format_array.present? %>
+  <table class="table--borderless">
+    <thead>
+      <tr>
+        <th role="columnheader">File Format</th>
+        <th role="columnheader">Registry</th>
+        <th role="columnheader">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% object_file.format_array.each do |curr_format| %>
+        <tr>
+          <td><%= curr_format[:file_format] %></td>
+          <td><%= curr_format[:format_registry] %></td>
+          <td><%= display_source(curr_format[:source]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if object_file.encoding_array.present? %>
+  <table class="table--borderless">
+    <thead>
+      <tr>
+        <th role="columnheader">Encoding</th>
+        <th role="columnheader">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% object_file.encoding_array.each do |curr_encoding| %>
+        <tr>
+          <td><%= curr_encoding[:encoding] %></td>
+          <td><%= display_source(curr_encoding[:source]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if object_file.validity_array.present? %>
+  <table class="table--borderless">
+    <thead>
+      <tr>
+        <th role="columnheader">Valid</th>
+        <th role="columnheader">Well-Formed</th>
+        <th role="columnheader">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% object_file.validity_array.each do |curr_validity| %>
+        <tr>
+          <td><%= curr_validity[:valid] %></td>
+          <td><%= curr_validity[:well_formed] %></td>
+          <td><%= display_source(curr_validity[:source]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

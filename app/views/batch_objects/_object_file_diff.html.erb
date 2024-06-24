@@ -1,0 +1,69 @@
+<% if object_file_diff.sha_digest_changed? %>
+  <dl class="file-attr">
+    <dt>New Digest</dt>
+    <dd class="monospace"><%= object_file_diff.new_sha_256_digest %></dd>
+    <dt>Old Digest</dt>
+    <dd class="monospace"><%= object_file_diff.old_sha_256_digest %></dd>
+  </dl>
+<% end %>
+
+<% if object_file_diff.format_diff.present? %>
+  <table class="table--borderless">
+    <thead>
+      <tr>
+        <th role="columnheader">File Format</th>
+        <th role="columnheader">Registry</th>
+        <th role="columnheader">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% object_file_diff.format_diff.each do |diff| %>
+        <tr>
+          <td><%= diff[:file_format] %></td>
+          <td><%= diff[:registry] %></td>
+          <td><%= diff[:status].titleize %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if object_file_diff.encoding_diff.present? %>
+  <table class="table--borderless">
+    <thead>
+      <tr>
+        <th role="columnheader">Encoding</th>
+        <th role="columnheader">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% object_file_diff.encoding_diff.each do |diff| %>
+        <tr>
+          <td><%= diff[:encoding] %></td>
+          <td><%= diff[:status].titleize %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if object_file_diff.validity_diff.present? %>
+  <table class="table--borderless">
+    <thead>
+      <tr>
+        <th role="columnheader">Valid</th>
+        <th role="columnheader">Well-formed</th>
+        <th role="columnheader">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% object_file_diff.validity_diff.each do |diff| %>
+        <tr>
+          <td><%= diff[:valid] %></td>
+          <td><%= diff[:well_formed] %></td>
+          <td><%= diff[:status].titleize %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

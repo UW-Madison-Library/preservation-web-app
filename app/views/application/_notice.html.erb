@@ -1,0 +1,11 @@
+<% if flash[:notice].present? %>
+  <p class="notice">
+    <span class="material-icons" aria-hidden="true">campaign</span>
+    <%= flash[:notice] %>
+  </p>
+<% elsif flash[:alert].present? %>
+  <p class="notice notice--alert">
+    <span class="material-icons" aria-hidden="true">error</span>
+    <%= flash[:alert] %>
+  </p>
+<% end %>

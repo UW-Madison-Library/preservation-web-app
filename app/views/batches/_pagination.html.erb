@@ -1,0 +1,47 @@
+<% if search_response.total_pages > 1 %>
+  <nav aria-label="Pagination" class="pagination">
+    <ul class="pagination__list">
+      <li class="pagination__item">
+        <% if search_response.current_page.positive? %>
+          <%= link_to organization_batches_path(current_organization.name,
+                                                params: { page: (search_response.current_page - 1),
+                                                vault: params[:vault],
+                                                state: params[:state] }) do %>
+              <div class="pagination__div">
+                <span class="material-icons" aria-hidden="true">navigate_before</span>
+                <span>Previous</span>
+              </div>
+          <% end %>
+        <% else %>
+          <div class="pagination__div pagination__div--disabled">
+            <span class="material-icons" aria-hidden="true">navigate_before</span>
+            <span>Previous</span>
+          </div>
+        <% end %>
+      </li>
+      <li class="pagination__item">
+        <div class="pagination__div">
+          Page <%= search_response.current_page + 1 %> of <%= search_response.total_pages %>
+        </div>
+      </li>
+      <li class="pagination__item">
+        <% if search_response.current_page + 1 < search_response.total_pages %>
+          <%= link_to organization_batches_path(current_organization.name,
+                                                params: { page: (search_response.current_page + 1),
+                                                          vault: params[:vault],
+                                                          state: params[:state] }) do %>
+            <div class="pagination__div">
+              <span>Next</span>
+              <span class="material-icons" aria-hidden="true">navigate_next</span>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="pagination__div pagination__div--disabled">
+            <span>Next</span>
+            <span class="material-icons" aria-hidden="true">navigate_next</span>
+          </div>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+<% end %>

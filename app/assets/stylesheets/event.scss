@@ -1,0 +1,51 @@
+.events {
+  margin: 1em 2em 2em 0;
+}
+
+.event {
+  border: var(--main-border);
+  border-radius: 6px;
+  background-color: var(--main-background-color);
+  margin: .5em 0;
+  padding: 1em;
+  width: 100%;
+  align-items: baseline;
+
+  @media only screen and (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: minmax(auto, 260px) 1fr;
+
+    .event__term {
+      grid-column: 1;
+    }
+
+    .event__definition {
+      grid-column: 2;
+      margin-bottom: .5em;
+    }
+  }
+}
+
+.event--failure {
+  background-color: #fbe9eb;
+}
+
+.event--warning {
+  background-color: #ffffdd;
+}
+
+.event__icon {
+  margin-right: 10px;
+  vertical-align: bottom;
+}
+
+.event__definition {
+  margin-left: 35px;
+}
+
+.event__list {
+  list-style: inside;
+  margin: 0;
+  max-height: 500px;
+  overflow: auto;
+}

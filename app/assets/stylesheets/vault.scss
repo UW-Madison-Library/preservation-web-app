@@ -1,0 +1,57 @@
+.vault {
+  border-radius: 4px;
+  padding: 1em 1em;
+  border: var(--main-border);
+  margin: 1em 0;
+  color: var(--main-text-color);
+  font-size: 1.17em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.vault__icon {
+  vertical-align: top;
+  margin-right: 10px;
+}
+
+.vault:hover,
+.vault:focus {
+  background-color: var(--main-background-color);
+  color: var(--main-link-color);
+  .vault__icon {
+    color: var(--main-text-color);
+  }
+}
+
+.batch_notifications {
+  padding: 1em 0;
+}
+
+.search-response {
+  padding: 1em 1.5em;
+  margin: 1em 0;
+  border: var(--main-border);
+  border-radius: 6px;
+}
+
+.vault_members {
+  padding: 1em 0;
+}
+
+.current_user {
+  font-weight: bold;
+}
+
+.object-problems__icon {
+  background: linear-gradient(96.86deg, #8C0000 0%, #E72121 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  vertical-align: sub;
+}
+
+.member_list {
+  display: inline;
+}

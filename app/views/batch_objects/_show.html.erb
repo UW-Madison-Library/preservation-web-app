@@ -1,0 +1,77 @@
+<h1>Object <%= batch_object.id %></h1>
+<dl class="grouped">
+  <div class="grouped__div grouped__div--short">
+    <dt>Identifier</dt>
+    <dd><%= batch_object.id %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Status</dt>
+    <dd><%= BatchObject::DISPLAY_STATES[batch_object.state] %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Batch</dt>
+    <dd><%= batch_object.batch_id %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Vault</dt>
+    <dd><%= link_to batch_object.vault, vault_path(batch_object.vault), data: {turbo_frame: "_top"} %></dd>
+  </div>
+  <% if batch_object.version_ingested? %>
+    <div class="grouped__div grouped__div--short">
+      <dt>Object Created</dt>
+      <dd>
+        <%= link_to "Version #{batch_object.preservation_object_version}",
+                    vault_preservation_objects_display_path(batch_object.vault,
+                                                            params: { preservation_object_id: batch_object.id,
+                                                                      version: batch_object.preservation_object_version }),
+                    data: {turbo_frame: "_top"} %>
+      </dd>
+    </div>
+  <% end %>
+  <% if batch_object.reviewed_by.present? %>
+    <div class="grouped__div grouped__div--short">
+      <dt>Reviewed By</dt>
+      <dd><%= batch_object.reviewed_by %></dd>
+    </div>
+  <% end %>
+  <div class="grouped__div grouped__div--short">
+    <dt>Analysis</dt>
+    <dd><%= analysis_text(batch_object.errors, batch_object.warnings) %></dd>
+  </div>
+</dl>
+
+<h2>Object Events</h2>
+<%= render partial: 'events', locals: { events: events } %>
+
+<h2>Files</h2>
+<% unless file_diffs.present? %>
+  <p>Files are not available for this object. Please review the object events and the object status for more information.</p>
+<% end %>
+
+<% sorted_file_diffs(file_diffs).each do |state, file_diff_list| %>
+  <h3><%= state.titleize %> Files</h3>
+
+  <% file_diff_list.each_with_index do |object_file_diff, index| %>
+    <div class="accordion" data-controller="accordion">
+      <h4 class="accordion__heading">
+        <button class="accordion__button" aria-expanded="false" aria-controls="accordion-<%= index %>" data-action="click->accordion#toggle" data-accordion-target="button">
+          <span><%= object_file_diff.path %></span>
+          <span class="material-icons accordion__icon" data-accordion-target="icon">expand_more</span>
+        </button>
+      </h4>
+
+      <div class="accordion__content" id="accordion-<%= index %>" data-accordion-target="content" hidden>
+        <% if object_file_diff.removed? %>
+          <div>This file was removed.</div>
+        <% else %>
+          <h5 class="file-subheading">Uploaded File</h5>
+          <%= render find_object_file(files, object_file_diff.path) %>
+        <% end %>
+        <% if object_file_diff.modified? %>
+          <h5 class="file-subheading">File Changes</h5>
+          <%= render partial: 'object_file_diff', locals: { object_file_diff: object_file_diff } %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

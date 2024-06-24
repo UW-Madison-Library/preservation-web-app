@@ -1,0 +1,18 @@
+<%= form_with url: organization_batches_path, method: :get do |form| %>
+  <fieldset>
+    <legend>Filters</legend>
+    <div class="select">
+      <%= form.label :vault %>
+      <%= form.collection_select :vault, vaults, :name, :name, { include_blank: 'Any', selected: params[:vault] } %>
+    </div>
+
+    <div class="select">
+      <%= form.label :status %>
+      <%= form.select :state, Batch::STATES.sort.map { |s| [s.titleize, s] }, { include_blank: 'Any', selected: params[:state] } %>
+    </div>
+
+    <div class="filter">
+      <%= form.submit 'Apply Filters' %>
+    </div>
+  </fieldset>
+<% end %>

@@ -1,0 +1,23 @@
+<dl class="events">
+  <% events.each do |event| %>
+    <div class="event <%= event_background_color(event) %>">
+      <dt class="event__term"><%= event_header_icon(event) %><%= event.type %></dt>
+      <dd class="event__definition">
+        <%= event.outcome %>
+      </dd>
+      <dd class="event__definition"><%= display_date(event.timestamp) %></dd>
+      <% if event.username.present? %>
+        <dd class="event__definition"><%= event.username %></dd>
+      <% end %>
+      <% if event.logs.present? %>
+        <dd class="event__definition">
+          <ul class="<%= event_style(event.logs.count) %>">
+            <% event.logs.each do |log| %>
+              <li><%= "#{log[:level].titleize}: #{log[:message]}" %></li>
+            <% end %>
+          </ul>
+        </dd>
+      <% end %>
+    </div>
+  <% end %>
+</dl>

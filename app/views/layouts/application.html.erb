@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <%= render 'head' %>
+  <body>
+    <%= render 'header' %>
+    <div class="nav_grid max_width">
+      <%= render 'nav' %>
+      <main>
+        <%= render 'notice' %>
+        <%= yield %>
+      </main>
+    </div>
+    <%= render 'footer' %>
+  </body>
+</html>

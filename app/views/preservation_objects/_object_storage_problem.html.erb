@@ -1,0 +1,14 @@
+<dl class="grouped grouped--red">
+  <div class="grouped__div grouped__div--short">
+    <dt>Problem</dt>
+    <dd><%= object_storage_problem[:problem].titleize %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Location</dt>
+    <dd><%= object_storage_problem[:data_store].titleize %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Time Identified</dt>
+    <dd><%= display_date(object_storage_problem[:reported_timestamp]) %></dd>
+  </div>
+</dl>

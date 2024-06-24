@@ -1,0 +1,95 @@
+<h1>Vault <%= @vault.name %></h1>
+<dl class="grouped">
+  <div class="grouped__div grouped__div--long">
+    <dt>Description</dt>
+    <dd><%= @vault.description %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Approximate Storage Used</dt>
+    <dd><%= @vault.approximate_storage_megabytes %> MB</dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Preservation Object Count</dt>
+    <dd><%= @vault.object_count %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Members</dt>
+    <% if @members[:contributor_list].count.positive? %>
+      <dd>Contributors: <%= format_display_names(@members[:contributor_list], current_user.display_name) %></dd>
+    <% end %>
+    <% if @members[:viewer_list].count.positive? %>
+      <dd>Viewers: <%= format_display_names(@members[:viewer_list], current_user.display_name) %></dd>
+    <% end %>
+  </div>
+</dl>
+
+<div class="preservation_objects">
+  <h2>Preservation Objects</h2>
+  <%= render partial: 'object_search_form', locals: { vault: @vault.name } %>
+  <div class="search-response">
+    <% if @search_response.success? %>
+      <h3>
+        <%= link_to @search_response.preservation_object.id,
+                    vault_preservation_objects_display_path(@vault.name,
+                                                            params: { preservation_object_id: @search_response.preservation_object.id }) %>
+      </h3>
+      <dl class="grouped">
+        <div class="grouped__div grouped__div--short">
+          <dt>Created</dt>
+          <dd><%= display_date(@search_response.preservation_object.object_created) %></dd>
+        </div>
+        <div class="grouped__div grouped__div--short">
+          <dt>Version Count</dt>
+          <dd><%= @search_response.preservation_object.latest_version %></dd>
+        </div>
+        <% if @search_response.preservation_object.deleted? %>
+          <div class="grouped__div grouped__div--short">
+            <dt>Status</dt>
+            <dd><%= @search_response.preservation_object.state.titleize %></dd>
+          </div>
+        <% end %>
+      </dl>
+    <% else %>
+      <p><%= @search_response.error %></p>
+    <% end %>
+  </div>
+</div>
+
+<% if @objects_with_problems.present? %>
+  <div class="object-problems">
+    <h2>Objects With Storage Problems <span class="material-icons object-problems__icon" aria-hidden="true">error</span></h2>
+    <ul>
+      <% @objects_with_problems.each do |pres_obj| %>
+        <li>
+          <%= link_to pres_obj, vault_preservation_objects_display_path(
+            @vault.name, params: { preservation_object_id: pres_obj }
+          ) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="batch_notifications">
+  <h2>Batch Actions</h2>
+  <ul>
+    <% if @vault.user_write_access? %>
+      <li>
+        <%= link_to 'Create New Batch',
+                    new_organization_batch_path(current_organization.name,
+                                                params: { vault_name: @vault.name }) %>
+      </li>
+    <% end %>
+    <li>
+      <%= link_to "View Batches Pending Review (#{@pending_batches_count})",
+                  organization_batches_path(current_organization.name,
+                                            params: { vault: @vault.name,
+                                                      state: PreservationManager::IngestBatchState::PENDING_REVIEW }) %>
+    </li>
+    <li>
+      <%= link_to "View All Batches",
+                  organization_batches_path(current_organization.name,
+                                            params: { vault: @vault.name }) %>
+    </li>
+  </ul>
+</div>

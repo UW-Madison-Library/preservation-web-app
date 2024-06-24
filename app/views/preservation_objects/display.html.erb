@@ -1,0 +1,107 @@
+<nav class="nav__parent">
+  <span class="material-icons navigate_before_icon" aria-hidden="true">navigate_before</span>
+  <%= link_to "Vault #{@vault.name}", vault_path(@vault.name) %>
+</nav>
+
+<% if @preservation_object.deleted? %>
+  <p class="notice notice--alert"><span class="material-icons">delete</span>This object was deleted. Please review the events for details.</p>
+<% end %>
+
+<h1>Preservation Object <%= @preservation_object.id %></h1>
+
+<h2>Object Overview</h2>
+<dl class="grouped">
+  <div class="grouped__div grouped__div--long">
+    <dt>Identifier</dt>
+    <dd><%= @preservation_object.id %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Created</dt>
+    <dd><%= display_date(@preservation_object.object_created) %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Version Count</dt>
+    <dd><%= @preservation_object.latest_version %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Local Storage Shallow Check</dt>
+    <dd><%= check_date(@preservation_object.last_shallow_check) %></dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Local Storage Deep Check</dt>
+    <dd><%= check_date(@preservation_object.last_deep_check) %></dd>
+  </div>
+</dl>
+
+<div class='version_grid'>
+  <div class="version">
+    <% if @preservation_object.latest_version? %>
+      <h2>Version <%= @preservation_object.version %> (Current)</h2>
+    <% else %>
+      <h2>Version <%= @preservation_object.version %></h2>
+    <% end %>
+    <dl class="grouped">
+      <div class="grouped__div grouped__div--short">
+        <dt>Created</dt>
+        <dd><%= display_date(@preservation_object.version_created) %></dd>
+      </div>
+      <div class="grouped__div grouped__div--short">
+        <dt>Source</dt>
+        <dd>
+          <%= link_to "Batch #{@preservation_object.batch_id}",
+                      batch_path(@preservation_object.batch_id) %>
+        </dd>
+      </div>
+      <% @preservation_object.version_storage_checks.each do |check| %>
+        <div class="grouped__div grouped__div--short">
+          <dt><%= check[:location] %> Check</dt>
+          <dd><%= check_date(check[:lastCheck]) %></dd>
+        </div>
+      <% end %>
+    </dl>
+
+    <h3>Files</h3>
+    <% @preservation_object.files.each_with_index do |file, index| %>
+      <div class="accordion" data-controller="accordion">
+        <h3 class="accordion__heading">
+          <button class="accordion__button" aria-expanded="false" aria-controls="accordion-<%= index %>" data-action="click->accordion#toggle" data-accordion-target="button">
+            <span><%= file.path %></span>
+            <span class="material-icons accordion__icon" data-accordion-target="icon" aria-hidden="true">expand_more</span>
+          </button>
+        </h3>
+
+        <div class="accordion__content" id="accordion-<%= index %>" data-accordion-target="content" hidden>
+          <%= render file %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="versions">
+    <h3 class="versions__header">History</h3>
+    <ul class="versions__list">
+      <% @preservation_object.latest_version.downto(1) do |version| %>
+        <li>
+          <%= link_to vault_preservation_objects_display_path(
+            @vault.name, params: { preservation_object_id: @preservation_object.id, version: version }
+          ) do %>
+
+            <div class="versions__item <%= highlight_current_version(@preservation_object.version, version) %>">
+              <%= "Version #{version}" %>
+            </div>
+
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<% if @storage_problems.present? %>
+  <h2>Current Object Integrity Problems</h2>
+  <p>Object integrity problems will be addressed by a Service Administrator. Review the Object Events for more details about current object integrity problems.</p>
+  <%= render partial: 'object_storage_problem', collection: @storage_problems %>
+<% end %>
+
+<h2>Object Events</h2>
+<%= render partial: 'events', locals: { events: @events.reverse } %>

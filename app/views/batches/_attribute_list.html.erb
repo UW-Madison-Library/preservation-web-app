@@ -1,0 +1,38 @@
+<dl class="grouped">
+  <div class="grouped__div grouped__div--short">
+    <dt>Submitted Bag</dt>
+    <dd><%= batch.original_filename %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Status</dt>
+    <dd><%= batch.state.titleize %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Vault</dt>
+    <dd><%= link_to batch.vault, vault_path(batch.vault) %></dd>
+  </div>
+  <% if batch.reviewed? %>
+    <div class="grouped__div grouped__div--short">
+      <dt>Reviewed By</dt>
+      <dd><%= batch.reviewed_by %></dd>
+    </div>
+  <% end %>
+  <div class="grouped__div grouped__div--short">
+    <dt>Last Updated</dt>
+    <dd><%= display_date(batch.updated) %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Created By</dt>
+    <dd><%= batch.created_by %></dd>
+  </div>
+  <div class="grouped__div grouped__div--short">
+    <dt>Created</dt>
+    <dd><%= display_date(batch.received) %></dd>
+  </div>
+  <% if analysis.present? %>
+    <div class="grouped__div grouped__div--short">
+      <dt>Analysis</dt>
+      <dd><%= analysis %></dd>
+    </div>
+  <% end %>
+</dl>

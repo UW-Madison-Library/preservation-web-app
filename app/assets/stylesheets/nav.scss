@@ -1,0 +1,55 @@
+// top-level app navigation
+.nav_grid {
+  padding: 0;
+
+  @media only screen and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 15em minmax(0, auto);
+    grid-gap: 1em;
+  }
+}
+
+.nav_group::after {
+  border-bottom: var(--main-border);
+  content: "";
+  display: block;
+  margin: 1em 0;
+}
+
+.nav_org_name {
+  color: var(--main-brand-color);
+  font-size: 1.17em;
+  text-align: center;
+}
+
+.nav_icon {
+  display: inline-flex;
+  vertical-align: top;
+  padding-right: 10px;
+  color: var(--main-text-color);
+}
+
+.nav_regular,
+.nav_highlighted {
+  padding: .5em 1em;
+  margin-top: .25em;
+  // transparent border added to prevent movement in menu when hover style is displayed
+  border: 1px solid transparent;
+}
+
+.nav_highlighted,
+.nav_regular:focus,
+.nav_regular:hover {
+  background-color: var(--main-background-color);
+  border: var(--main-border);
+  border-radius: 6px;
+}
+
+// other (not top-level) app navigation
+.nav__parent {
+  margin: 1em 0 1.5em 0;
+}
+
+.navigate_before_icon {
+  vertical-align: bottom;
+}

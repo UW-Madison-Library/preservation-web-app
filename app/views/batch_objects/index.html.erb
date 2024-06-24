@@ -1,0 +1,61 @@
+<nav class="nav__parent">
+  <span class="material-icons navigate_before_icon" aria-hidden="true">navigate_before</span>
+  <% if @batch.pending_review? %>
+    <%= link_to batch_header(@batch), edit_batch_path(@batch.id) %>
+  <% else %>
+    <%= link_to batch_header(@batch), batch_path(@batch.id) %>
+  <% end %>
+</nav>
+
+<h1>Objects in Batch <%= @batch.id %></h1>
+
+<%= render partial: 'filter_form' %>
+
+<div class="batch_objects">
+  <p class="total_results"><%= @search_response.total_results %> Total Results</p>
+
+  <% if @batch_objects.count.positive? %>
+    <nav aria-label="Pagination" class="pagination">
+      <% if @search_response.total_pages > 1 %>
+        <%= previous_page(@search_response.current_page) %>
+      <% end %>
+
+      <div class="menu inline" data-controller="dropdown" data-action="click@window->dropdown#hide">
+        <button aria-expanded="false" aria-controls="menu1" id="menu1Label" class="drop_menu" data-dropdown-target="button" data-action="click->dropdown#toggle">
+          <% if @search_response.total_pages > 1 %>
+            <span class="drop-text">Select an Object (Results <%= dropdown_range(@search_response.current_page, @search_response.total_results) %>)</span>
+          <% else %>
+            <span class="drop-text">Select an Object</span>
+          <% end %>
+          <span class="material-icons" aria-hidden="true" data-nosnippet>expand_more</span>
+        </button>
+
+        <ul id="menu1" aria-labelledby="menu1Label" class="submenu change" data-dropdown-target="options" hidden>
+          <% @batch_objects.each do |batch_object| %>
+            <li>
+              <%= link_to batch_objects_path(@batch.id, params: { has_problems: params[:has_problems], page: params[:page], batch_object_id: batch_object.id }),
+                                             data: { turbo: "true", turbo_frame: "batch_object_details", action: "dropdown#selectOption" },
+                                             'aria-controls' => 'batch_object_info' do %>
+                <div class="submenu__item">
+                  <%= batch_object.id %>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <% if @search_response.total_pages > 1 %>
+        <%= next_page(@search_response.current_page, @search_response.total_pages) %>
+      <% end %>
+    </nav>
+
+    <%= turbo_frame_tag id="batch_object_details" do %>
+      <section class="show_batch_object">
+        <div role="region" id="batch_object_info" aria-live="polite">
+          <%= render partial: 'show', locals: { batch_object: @batch_object, events: @events, files: @files, file_diffs: @file_diffs } %>
+        </div>
+      </section>
+    <% end %>
+  <% end %>
+</div>

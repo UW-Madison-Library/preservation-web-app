@@ -1,0 +1,22 @@
+<div class="index_header">
+  <h1>Batches</h1>
+  <%= link_to new_organization_batch_path(current_organization.name) do %>
+    <div class="index_header__new">New Batch</div>
+  <% end %>
+</div>
+
+<%= render partial: 'filter_form', locals: { vaults: @vaults } %>
+
+<div class="batch_list">
+  <p class="total_results"><%= @search_response.total_results %> Total Results</p>
+  <%= render partial: 'pagination', locals: { search_response: @search_response } %>
+
+  <ul>
+    <% @search_response.batches.each do |batch| %>
+      <li class="batch_item">
+        <h2><%= batch_item_header(batch, @vaults) %></h2>
+        <%= render partial: 'attribute_list', locals: { batch: batch, analysis: nil } %>
+      </li>
+    <% end %>
+  </ul>
+</div>

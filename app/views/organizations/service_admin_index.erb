@@ -1,0 +1,35 @@
+<h1>Service Administration Home</h1>
+
+<h2>System Overview</h2>
+<dl class="grouped">
+  <div class="grouped__div grouped__div--long">
+    <dt>Approximate Storage Used</dt>
+    <dd><%= @total_storage %> MB</dd>
+  </div>
+  <div class="grouped__div grouped__div--long">
+    <dt>Total Object Count</dt>
+    <dd><%= @total_objects %></dd>
+  </div>
+</dl>
+
+<h2 class="organizations-h2">Organizations</h2>
+<table class="table--borderless table--large">
+  <thead>
+    <tr>
+      <th role="columnheader">Organization</th>
+      <th role="columnheader">Identifier</th>
+      <th role="columnheader">Approximate Storage Used</th>
+      <th role="columnheader">Object Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @organizations.sort_by(&:display_name).each do |organization| %>
+      <tr>
+        <td><%= link_to organization.display_name, organization_path(organization.name) %></td>
+        <td><%= organization.name %></td>
+        <td class="table__data--right"><%= organization.storage_megabytes %> MB</td>
+        <td class="table__data--right"><%= organization.object_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

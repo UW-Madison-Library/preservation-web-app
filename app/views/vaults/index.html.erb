@@ -1,0 +1,38 @@
+<div class="index_header">
+  <h1>Vaults</h1>
+  <% if current_organization.admin? %>
+    <%= link_to new_organization_vault_path(current_organization.name) do %>
+      <div class="index_header__new">New Vault</div>
+    <% end %>
+  <% end %>
+</div>
+
+<h2>My Vaults</h2>
+<ul>
+  <% user_vaults(@vaults).each do |vault| %>
+    <li>
+      <%= link_to vault_path(vault.name) do %>
+        <div class="vault">
+          <span class="material-icons vault__icon" aria-hidden="true">inventory_2</span>
+          <span><%= vault.name %></span>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<% if @vaults.reject(&:user_access?).any? %>
+  <h2>Other Vaults</h2>
+  <ul>
+    <% no_access_vaults(@vaults).each do |vault| %>
+      <li>
+        <%= link_to vault_path(vault.name) do %>
+          <div class="vault">
+            <span class="material-icons vault__icon" aria-hidden="true">visibility_off</span>
+            <span><%= vault.name %></span>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

@@ -1,0 +1,12 @@
+<h1><%= batch_header(@batch) %></h1>
+<%= render partial: 'attribute_list', locals: { batch: @batch, analysis: @analysis } %>
+
+<h2>Batch Events</h2>
+<%= render partial: 'events', locals: { events: @events } %>
+
+<%= render partial: 'objects_summary',
+           locals: { batch_id: @batch.id,
+                     total_object_count: @total_object_count,
+                     warning_object_count: @warning_object_count,
+                     error_object_count: @error_object_count,
+                     no_issues_object_count: @no_issues_object_count } %>
