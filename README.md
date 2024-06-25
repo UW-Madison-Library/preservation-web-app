@@ -7,13 +7,13 @@ An administrative application that allows users to submit and review content for
 * Ruby 3.1.2
 
 ## Run
-Follow the instructions to build and run the [Preservation Service Manager and Worker](https://github.com/UW-Madison-Library/preservation-service?tab=readme-ov-file#build). Both the preservation manager and preservation worker services need to be running for the web appilication to function.
+Follow the instructions to build and run the [Preservation Service Manager and Worker](https://github.com/UW-Madison-Library/preservation-service?tab=readme-ov-file#build). Both the preservation manager and preservation worker services need to be running for the web application to function.
 
 Clone this repository and then run `bundle install` to install the dependencies in the Gemfile.
 
 Then run `./bin/dev` to start this Rails application.
 
-The webapp can then be found at <http://localhost:3000>.
+The web application can then be found at <http://localhost:3000>.
 
 ## Test Suite
 Run `bundle exec rspec` to run the test suite.
